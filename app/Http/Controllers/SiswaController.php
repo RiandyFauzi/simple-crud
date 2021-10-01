@@ -37,7 +37,11 @@ class SiswaController extends Controller
      */
     public function store(SiswaRequest $request)
     {
-        Siswa::create($request->all());
+        try {
+            Siswa::create($request->all());
+        } catch (\Exception $e) {
+            dd("Error {$e->getMessage()}");
+        }
         return redirect('/siswa');
     }
 
@@ -60,7 +64,7 @@ class SiswaController extends Controller
      */
     public function edit($id)
     {
-        $siswa = Siswa::find($id);
+        $siswa = Siswa::findOrFail($id);
        return view('siswa.edit', compact('siswa'));
     }
 
